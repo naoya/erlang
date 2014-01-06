@@ -43,5 +43,8 @@ when 'rhel'
     include_recipe 'yum-erlang_solutions'
   end
 
-  package 'erlang'
+  execute "yum install -y erlang-R16B02" do
+    command "yum install -y erlang-R16B02"
+    not_if { File.exists? "/usr/bin/erl" }
+  end
 end
