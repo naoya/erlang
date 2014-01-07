@@ -43,8 +43,12 @@ when 'rhel'
     include_recipe 'yum-erlang_solutions'
   end
 
-  execute "yum install -y erlang-R16B02" do
-    command "yum install -y erlang-R16B02"
-    not_if { File.exists? "/usr/bin/erl" }
+  if node.platform == "amazon"
+    package 'erlang'
+  else
+    execute "yum install -y erlang-R16B02" do
+      command "yum install -y erlang-R16B02"
+      not_if { File.exists? "/usr/bin/erl" }
+    end
   end
 end
